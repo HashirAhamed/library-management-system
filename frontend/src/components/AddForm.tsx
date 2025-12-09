@@ -18,6 +18,7 @@ export default function AddForm({
     title: "",
     author: "",
     description: "",
+    units: 0,
   });
 
   useEffect(() => {
@@ -26,9 +27,10 @@ export default function AddForm({
         title: initialBook.title,
         author: initialBook.author,
         description: initialBook.description ?? "",
+        units: initialBook.units,
       });
     } else {
-      setFormData({ title: "", author: "", description: "" });
+      setFormData({ title: "", author: "", description: "", units: 0 });
     }
   }, [initialBook]);
 
@@ -40,24 +42,23 @@ export default function AddForm({
         </h2>
 
         <form onSubmit={(e) => {
-            e.preventDefault();
+          e.preventDefault();
 
-            if (initialBook) {
-              // edit if initialBook exists
-              onSubmit({
-                ...initialBook,
-                ...formData,
-              });
-            } else {
-              // add if no initialBook
-              onSubmit({
-                ...formData,
-                units: 0, // default for now
-              });
-            }
+          if (initialBook) {
+            // edit if initialBook exists
+            onSubmit({
+              ...initialBook,
+              ...formData,
+            });
+          } else {
+            // add if no initialBook
+            onSubmit({
+              ...formData,
+            });
+          }
 
-            onClose();
-          }}
+          onClose();
+        }}
         >
           <div className="space-y-5">
             <div>
@@ -102,6 +103,22 @@ export default function AddForm({
                   setFormData({ ...formData, description: e.target.value })
                 }
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
+                Units
+              </label>
+              <input
+                type="number"
+                min="0"
+                required
+                value={formData.units}
+                onChange={(e) =>
+                  setFormData({ ...formData, units: parseInt(e.target.value) || 0 })
+                }
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
           </div>

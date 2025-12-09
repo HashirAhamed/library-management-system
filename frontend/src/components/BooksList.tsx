@@ -52,15 +52,28 @@ function BookItems({ books, expandedId, onToggleExpand, onEdit, onDelete }: Book
 
                     {expandedId === book.id && (
                         <div className="px-5 pb-5 pt-2 bg-slate-50 border-t border-slate-100">
-                            <div className="space-y-3 text-sm ml-14">
-                                <div className="flex">
-                                    <span className="font-semibold text-slate-700 w-24">Author:</span>
-                                    <span className="text-slate-600">{book.author}</span>
+                            <div className="flex justify-between items-start ml-14 mr-14">
+
+                                <div className="space-y-3 text-sm pr-8">
+                                    <div className="flex">
+                                        <span className="font-semibold text-slate-700 w-24">Author:</span>
+                                        <span className="text-slate-600">{book.author}</span>
+                                    </div>
+                                    <div className="flex">
+                                        <span className="font-semibold text-slate-700 w-24">Description:</span>
+                                        <span className="text-slate-600">{book.description}</span>
+                                    </div>
                                 </div>
-                                <div className="flex">
-                                    <span className="font-semibold text-slate-700 w-24">Description:</span>
-                                    <span className="text-slate-600">{book.description}</span>
+
+                                <div className="flex flex-col items-center justify-center bg-white px-2 py-1">
+                                    <span className="font-semibold text-sm text-slate-700">
+                                        Units
+                                    </span>
+                                    <span className=" text-slate-800">
+                                        {book.units}
+                                    </span>
                                 </div>
+
                             </div>
                         </div>
                     )}
