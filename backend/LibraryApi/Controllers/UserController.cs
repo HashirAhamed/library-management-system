@@ -116,7 +116,6 @@ namespace LibraryApi.Controllers
 
         private string CreateToken(User user)
         {
-            // You should store this key in appsettings.json, but hardcoded here for your assignment simplicity
             var secretKey = "this is my Secret key for authentication and am glad i chose this key";
 
             List<Claim> claims = new List<Claim> {
@@ -136,5 +135,7 @@ namespace LibraryApi.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
         }
+
+
     }
 }
