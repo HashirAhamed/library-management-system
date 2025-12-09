@@ -4,16 +4,16 @@ import type { Book } from "../types/book";
 interface AddModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (book: Omit<Book, 'id'>) => void;
+  onSubmit: (book: Omit<Book, "id"> | Book) => void;
   initialBook?: Book | null;
 }
 
 export default function AddForm({
+  isOpen,
   onClose,
   onSubmit,
-  initialBook
+  initialBook,
 }: AddModalProps) {
-
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -34,6 +34,8 @@ export default function AddForm({
     }
   }, [initialBook]);
 
+  if (!isOpen) return null;
+
   return (
     <div className="fixed inset-0 bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
       <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
@@ -41,24 +43,23 @@ export default function AddForm({
           {initialBook ? "Edit Book" : "Add New Book"}
         </h2>
 
-        <form onSubmit={(e) => {
-          e.preventDefault();
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
 
-          if (initialBook) {
-            // edit if initialBook exists
-            onSubmit({
-              ...initialBook,
-              ...formData,
-            });
-          } else {
-            // add if no initialBook
-            onSubmit({
-              ...formData,
-            });
-          }
+            if (initialBook) {
+              onSubmit({
+                ...initialBook,
+                ...formData,
+              });
+            } else {
+              onSubmit({
+                ...formData,
+              });
+            }
 
-          onClose();
-        }}
+            onClose();
+          }}
         >
           <div className="space-y-5">
             <div>
@@ -116,7 +117,10 @@ export default function AddForm({
                 required
                 value={formData.units}
                 onChange={(e) =>
-                  setFormData({ ...formData, units: parseInt(e.target.value) || 0 })
+                  setFormData({
+                    ...formData,
+                    units: Number(e.target.value) || 0,
+                  })
                 }
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
               />

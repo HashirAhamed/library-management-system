@@ -41,6 +41,9 @@ function Books() {
             setBooks(books.map(b => b.id === updatedBook.id ? book : b));
             console.log("Book updated successfully");
             setExpandedId(null);
+
+            setShowAddModal(false);
+            setEditingBook(null);
         }
         catch (error) {
             console.error("Failed to update book", error);
@@ -119,6 +122,8 @@ function Books() {
                                 const newBook = await createBook(book);
                                 setBooks(prev => [...prev, newBook]);
                             }
+                            setShowAddModal(false);
+                            setEditingBook(null)
                         } catch (err) {
                             console.error(err);
                         }

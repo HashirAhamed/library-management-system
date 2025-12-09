@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using LibraryApi.Data;
 using LibraryApi.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BookController : ControllerBase
     {
         private readonly Db _context;
@@ -18,6 +20,7 @@ namespace LibraryApi.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost] //POST /api/book enter a book
         public async Task<IActionResult> AddBook(Book book)
         {
@@ -33,6 +36,7 @@ namespace LibraryApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet] //GET /api/book get all books
         public async Task<IActionResult> GetBooks()
         {
@@ -47,6 +51,7 @@ namespace LibraryApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")] //GET /api/book/:id get book by id
         public async Task<IActionResult> GetBook(int id)
         {
@@ -66,6 +71,7 @@ namespace LibraryApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")] //PUT /api/book/:id update book by id
         public async Task<IActionResult> UpdateBook(int id, [FromBody]Book book)
         {
@@ -90,6 +96,7 @@ namespace LibraryApi.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")] //DELETE /api/book/:id update book by id
         public async Task<IActionResult> DeleteBook(int id)
         {
