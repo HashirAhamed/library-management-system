@@ -5,7 +5,6 @@ const url = import.meta.env.VITE_BASE_URL;
 
 export async function getBooks(): Promise<Book[]> {
     const response = await api.get<Book[]>(`${url}/Book`);
-    console.log(response.data);
     return response.data;
 }
 
