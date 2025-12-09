@@ -1,18 +1,17 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import BookList from './pages/BookList';
+import { Routes, Route } from 'react-router-dom';
+import BookList from './pages/Books';
 
-function App(){
+function App() {
   return (
-    <div>
-      <nav>
-        <Link to="/">Books</Link> |{" "}
-      </nav>
+    <main className="p-8 min-h-screen">
+      <div>
 
-      <Routes>
-        <Route path="/" element={<BookList />} />
-      </Routes>
-      
-    </div>
+        <Routes>
+          <Route path="/" element={<BookList />} />
+        </Routes>
+
+      </div>
+    </main>
   );
 }
 
